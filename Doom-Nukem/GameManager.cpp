@@ -10,6 +10,20 @@ void GameManager::start()
 {
 	_done = false;
 	while (!_done) {
+
+		_start = std::chrono::system_clock::now();
+
+		std::chrono::duration<double, std::milli> workTime = _start - _end;
+
+		if (workTime.count() < ((1.0f / _wantedFps) * 1000.0f))
+		{
+			std::chrono::duration<double, std::milli> delta_ms((1.0f / _wantedFps) * 1000.0f - workTime.count());
+			auto delta_ms_duration = std::chrono::duration_cast<std::chrono::milliseconds>(delta_ms);
+			std::this_thread::sleep_for(std::chrono::milliseconds(delta_ms_duration.count()));
+		}
+
+		_end = std::chrono::system_clock::now();
+
 		// poll events
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
@@ -69,7 +83,7 @@ void GameManager::start()
 				break; //red
 			case 2:  color.g = 255;  break; //green
 			case 3:  color.b = 255;   break; //blue
-			case 4:  color.r = 255; color.g = 255; color.b = 255;;  break; //white
+			case 4:  color.r = 0; color.g = 255; color.b = 255;;  break; //white
 			default: color.r = 255; color.g = 255;  color.b = 255;; break; //yellow
 			}
 			//give x and y sides different brightness
@@ -83,18 +97,28 @@ void GameManager::start()
 			_graphicsController->drawLine(x, drawStart, x, drawEnd, color);
 		}
 
-        _oldTime = _time;
+		auto oldTime = _time;
+
         _time = std::chrono::system_clock::now();
-        _frameTime = _time - _oldTime;
+		auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(_time - _oldTime).count();
+		if (elapsed >= 1) {
+			_fps = _frameCount / elapsed;
+			_oldTime = _time;
+			_frameCount = 0;
+		}
+
+		_frameTime = _time - oldTime;
 
 		float moveSpeed = _frameTime.count() * 5.0f; //the constant value is in squares/second
 		float rotSpeed = _frameTime.count() * 3.0f; //the constant value is in radians/second
 
 		_player.setMoveSpeed(moveSpeed);
 		_player.setRotSpeed(rotSpeed);
-
+		
+		_graphicsController->drawFPS(_fps);
 		_graphicsController->present();
 		_graphicsController->clear();
+		_frameCount++;
 	}
 }
 
@@ -160,3 +184,4 @@ void GameManager::_movePlayer()
 		_player.rotateLeft(_worldMap);
 	}
 }
+

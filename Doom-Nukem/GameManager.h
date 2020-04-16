@@ -7,6 +7,7 @@
 #include <chrono>
 #include "GraphicsController.hpp"
 #include <memory>
+#include <thread>
 
 class GameManager
 {
@@ -38,12 +39,20 @@ private:
 
 	int** _worldMap;
 
+	std::chrono::system_clock::time_point _start; 
+	std::chrono::system_clock::time_point _end;
+
 	std::chrono::system_clock::time_point _time; //time of current frame
 	std::chrono::system_clock::time_point _oldTime; //time of previous frame
 	std::chrono::duration<double> _frameTime;
 
+	int _fps = 0;
+
 	int _screenWidth = 640 * 2;
 	int _screenHeight = 480 * 2;
+
+	int _frameCount = 0;
+	float _wantedFps = 150;
 
 };
 
