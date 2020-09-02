@@ -139,7 +139,7 @@ void GameManager::start()
 	}
 }
 
-GameManager::GameManager() {
+GameManager::GameManager()  {
 	int worldMap[24][24] =
 	{
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -289,18 +289,11 @@ void GameManager::_pollEvents()
 				_done = true;
 			case SDL_MOUSEMOTION:
 			{
-				static int xpos = _screenWidth / 2; // = 400 to center the cursor in the window
-				static int ypos = _screenHeight / 2; // = 300 to center the cursor in the window
-
-				int diff = xpos - event.motion.x;
-
-				xpos = event.motion.x;
-
-				if (diff == 0) {
+				if (event.motion.xrel == 0) {
 					break;
 				}
 
-				if (diff > 0) {
+				if (event.motion.xrel < 0) {
 					_player.rotateLeft();
 				}
 				else {
