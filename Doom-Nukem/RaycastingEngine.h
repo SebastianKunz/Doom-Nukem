@@ -1,4 +1,5 @@
 #ifndef RAYCASTING_ENGINE_H
+#define RAYCASTING_ENGINE_H
 
 #include <cmath>        // std::abs
 

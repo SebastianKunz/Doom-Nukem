@@ -1,4 +1,5 @@
 #ifndef PLAYER_H
+#define PLAYER_H
 
 #include <cmath>
 
@@ -8,6 +9,10 @@ public:
 	Player();
 	~Player();
 
+	/*
+		TODO: Should the world map really be passed every time, or keeped as a reference?
+	*/
+
 	void	moveRight(int **worldMap);
 
 	void	moveLeft(int **worldMap);
@@ -16,9 +21,9 @@ public:
 
 	void	moveBackwards(int **worldMap);
 
-	void	rotateRight(int **worldMap);
+	void	rotateRight();
 
-	void	rotateLeft(int **worldMap);
+	void	rotateLeft();
 	
 	float	posX();
 	float	posY();

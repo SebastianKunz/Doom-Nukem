@@ -1,4 +1,4 @@
-#include "GraphicsController.hpp"
+#include "GraphicsController.h"
 #include <iostream>
 #include <string>
 
@@ -16,9 +16,11 @@ GraphicsController::GraphicsController(int width, int height)
     if (TTF_Init() < 0)
         throw std::exception(TTF_GetError());
 
-    _font24 = TTF_OpenFont("C:/Users/BataK/Desktop/Projects/Doom-Nukem-CPP/Doom-Nukem/Debug/arial.ttf", 24);
+    //_font24 = TTF_OpenFont(".\\Resources\\Fonts\\arial.ttf", 24);
+    _font24 = TTF_OpenFont("E:/Projects/Doom-Nukem-CPP/Doom-Nukem/Debug/Resources/Fonts/arial.ttf", 24);
 
     if (_font24 == nullptr) {
+        std::cout << TTF_GetError();
         throw std::exception(TTF_GetError());
     }
 
@@ -26,6 +28,8 @@ GraphicsController::GraphicsController(int width, int height)
     if (_window == nullptr) {
         throw std::exception("Could not create window");
     }
+
+    SDL_SetRelativeMouseMode(SDL_TRUE);
 }
 
 GraphicsController::~GraphicsController()
@@ -60,11 +64,11 @@ void GraphicsController::drawFPS(int fps)
     Message_rect.w = 45; // controls the width of the rect
     Message_rect.h = 45; // controls the height of the rect
 
-    //Mind you that (0,0) is on the top left of the window/screen, think a rect as the text's box, that way it would be very simple to understance
-
-    //Now since it's a texture, you have to put RenderCopy in your game loop area, the area where the whole code executes
-
     SDL_RenderCopy(_renderer, Message, NULL, &Message_rect);
+
+    SDL_FreeSurface(surfaceMessage);
+    SDL_DestroyTexture(Message);
+
 }
 
 void GraphicsController::drawVerticalLine(int x, int y, int height, SDL_Color color)
@@ -77,4 +81,21 @@ void GraphicsController::drawLine(int x1, int y1, int x2, int y2, SDL_Color colo
 {
     SDL_SetRenderDrawColor(_renderer, color.r, color.g, color.b, color.a);
     SDL_RenderDrawLine(_renderer, x1, y1, x2, y2);
+}
+
+void GraphicsController::setPixel(int x, int y, SDL_Color color)
+{
+    SDL_SetRenderDrawColor(_renderer, color.r, color.g, color.b, color.a);
+    SDL_RenderDrawPoint(_renderer, x, y);
+}
+
+void GraphicsController::setTextureVertical(SDL_Surface *rawTexture, int x, int y, int height, int texX)
+{
+    if (rawTexture == nullptr)
+        return;
+    SDL_Rect destRect = { x, y, 1, height };
+    SDL_Rect srcRect = { texX, 0, 1, height };
+    auto texture = SDL_CreateTextureFromSurface(_renderer, rawTexture);
+    SDL_RenderCopy(_renderer, texture, &srcRect, &destRect);
+    SDL_DestroyTexture(texture);
 }

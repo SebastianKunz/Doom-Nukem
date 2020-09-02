@@ -1,4 +1,5 @@
-#ifndef RENDERER_H
+#ifndef GRAPHICS_CONTROLLER_H
+#define GRAPHICS_CONTROLLER_H
 
 #include <SDL.h>
 #include <exception>
@@ -21,6 +22,10 @@ public:
 
 	void drawLine(int x1, int y1, int x2, int y2, SDL_Color color);
 
+	void setPixel(int x, int y, SDL_Color color);
+
+	void setTextureVertical(SDL_Surface* rawTexture, int x, int y, int height, int texX);
+
 private:
 
 	SDL_Window *_window = nullptr;
@@ -29,4 +34,4 @@ private:
 	TTF_Font* _font24 = nullptr;
 };
 
-#endif // !RENDERER_H
+#endif // !GRAPHICS_CONTROLLER_H 

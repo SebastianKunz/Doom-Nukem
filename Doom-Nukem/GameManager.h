@@ -1,13 +1,18 @@
 #ifndef GAME_MANAGER_H
+#define GAME_MANAGER_H
 
 #include <SDL.h>
+#include <iostream>
 #include "KeyboardHandler.h"
-#include "Player.hpp"
-#include "RaycastingEngine.hpp"
+#include "Player.h"
+#include "RaycastingEngine.h"
 #include <chrono>
-#include "GraphicsController.hpp"
+#include "GraphicsController.h"
 #include <memory>
 #include <thread>
+#include <vector>
+#include "GeneratedTextureManager.h"
+#include "FileTextureManager.h"
 
 class GameManager
 {
@@ -25,17 +30,30 @@ public:
 
 	GameManager();
 
-
 private:
 	
-
 	void _movePlayer();
+
+	SDL_Color _getMapPositionToColor(int mapX, int mapY, bool side);
+
+	std::vector<uint32_t> _getMapPositionToGenTexture(int mapX, int mapY, bool side);
+
+	void _waitToFitFPS();
+
+	void _pollEvents();
+
+	void _calculateFps();
 
 	bool _done = false;
 
 	KeyboardHandler _keyboardHandler;
 	Player _player;
 	std::unique_ptr<GraphicsController> _graphicsController;
+	//std::unique_ptr<ITextureManager> _textureManager;
+	//std::unique_ptr<GeneratedTextureManager> _textureManager;
+
+	// TODO: should allow to switch between texture and generated textures renderer
+	std::unique_ptr<FileTextureManager> _textureManager;
 
 	int** _worldMap;
 
@@ -53,7 +71,6 @@ private:
 
 	int _frameCount = 0;
 	float _wantedFps = 150;
-
 };
 
 #endif // !GAME_MANAGER_H

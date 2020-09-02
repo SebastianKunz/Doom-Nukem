@@ -1,4 +1,5 @@
 #ifndef KEYBOARD_HANDLER_H
+#define KEYBOARD_HANDLER_H
 
 #include <SDL.h>
 
