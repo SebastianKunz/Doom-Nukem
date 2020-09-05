@@ -1,6 +1,10 @@
 #include "Player.h"
 #include <iostream>
 
+namespace doom_nukem
+{
+
+
 Player::Player()
 {
 }
@@ -112,3 +116,4 @@ float Player::planeY()
 	return _planeY;
 }
 
+}

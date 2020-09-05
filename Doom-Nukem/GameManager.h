@@ -11,9 +11,14 @@
 #include <memory>
 #include <thread>
 #include <vector>
-#include "GeneratedTextureManager.h"
-#include "FileTextureManager.h"
+//#include "GeneratedTextureManager.h"
+//#include "FileTextureManager.h"
 
+namespace doom_nukem
+{
+
+
+// deprecated
 class GameManager
 {
 public:
@@ -53,7 +58,7 @@ private:
 	//std::unique_ptr<GeneratedTextureManager> _textureManager;
 
 	// TODO: should allow to switch between texture and generated textures renderer
-	std::unique_ptr<FileTextureManager> _textureManager;
+	//std::unique_ptr<FileTextureManager> _textureManager;
 
 	int** _worldMap;
 
@@ -74,3 +79,4 @@ private:
 };
 
 #endif // !GAME_MANAGER_H
+}

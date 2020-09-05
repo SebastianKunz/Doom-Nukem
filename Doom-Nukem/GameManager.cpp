@@ -4,12 +4,17 @@
 #include <string>
 #include <iostream>
 
+
+
 std::wstring ExePath() {
 	TCHAR buffer[MAX_PATH] = { 0 };
 	GetModuleFileName(NULL, buffer, MAX_PATH);
 	std::wstring::size_type pos = std::wstring(buffer).find_last_of(L"\\/");
 	return std::wstring(buffer).substr(0, pos);
 }
+
+namespace doom_nukem
+{
 
 
 GameManager& GameManager::getInstance() {
@@ -63,7 +68,6 @@ void GameManager::start()
 			//choose wall color
 			//SDL_Color color = _getMapPositionToColor(mapX, mapY, side);
 			//
-			//_graphicsController->drawLine(x, drawStart, x, drawEnd, color);
 
 			//texturing calculations
 			int texNum = _worldMap[mapX][mapY] - 1; //1 subtracted from it so that texture 0 can be used!
@@ -87,15 +91,9 @@ void GameManager::start()
 			// Starting texture coordinate
 			double texPos = (drawStart - _screenHeight / 2 + lineHeight / 2) * step;
 
-			try
-			{
 
-				_graphicsController->setTextureVertical(_textureManager->getTexture(texNum), x, drawStart, lineHeight, texX);
-			}
-			catch (const std::exception& e)
-			{
-				std::cout << e.what() << std::endl;
-			}
+			int texY = (int)texPos & (texHeight - 1);
+			//_graphicsController->setTextureVertical(_textureManager->getTexture(texNum), x, drawStart, lineHeight, texX, texY);
 			
 
 			//std::vector<Uint32> texture = _textureManager->getTexture(texNum);
@@ -118,6 +116,8 @@ void GameManager::start()
 
 			//	_graphicsController->setPixel(x, y, color);
 			//}
+			//	SDL_Color color = { 255, 0, 0, 255 };
+			//_graphicsController->drawLine(x, drawStart, x, drawEnd, color);
 		}
 
 		auto oldTime = _time;
@@ -199,15 +199,16 @@ GameManager::GameManager()  {
 	//paths.push_back("Resources/textures/redbrick.png");
 	//paths.push_back("Resources/textures/wood.png");
 
-	try
-	{
-		_textureManager = std::make_unique<FileTextureManager>(paths);
-		_textureManager->loadTextures();
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << e.what() << std::endl;
-	}
+	//try
+	//{
+	//	_textureManager = std::make_unique<FileTextureManager>(paths);
+	//	//_textureManager = std::make_unique<GeneratedTextureManager>();
+	//	_textureManager->loadTextures();
+	//}
+	//catch (const std::exception& e)
+	//{
+	//	std::cout << e.what() << std::endl;
+	//}
 }
 GameManager::~GameManager() {}
 
@@ -319,3 +320,4 @@ void GameManager::_calculateFps()
 	}
 }
 
+}

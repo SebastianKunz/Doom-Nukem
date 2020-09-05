@@ -6,6 +6,10 @@
 
 #include <SDL_ttf.h>
 
+namespace doom_nukem
+{
+
+
 class GraphicsController
 {
 public:
@@ -24,7 +28,7 @@ public:
 
 	void setPixel(int x, int y, SDL_Color color);
 
-	void setTextureVertical(SDL_Surface* rawTexture, int x, int y, int height, int texX);
+	void setTextureVertical(SDL_Surface* rawTexture, int x, int y, int height, int texX, int texY);
 
 private:
 
@@ -34,4 +38,5 @@ private:
 	TTF_Font* _font24 = nullptr;
 };
 
+}
 #endif // !GRAPHICS_CONTROLLER_H 

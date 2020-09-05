@@ -3,6 +3,10 @@
 
 #include <cmath>
 
+namespace doom_nukem
+{
+
+
 class Player
 {
 public:
@@ -10,7 +14,7 @@ public:
 	~Player();
 
 	/*
-		TODO: Should the world map really be passed every time, or keeped as a reference?
+		TODO: Should the world map really be passed every time, or keept as a reference?
 	*/
 
 	void	moveRight(int **worldMap);
@@ -50,11 +54,12 @@ private:
 	float _dirX = -1.0f;
 	float _dirY = 0.0f;
 
-	float _moveSpeed = 5.0f;
-	float _rotSpeed = 3.0f;
+	float _moveSpeed = 0.01f;
+	float _rotSpeed = 0.02f;
 
 	float _planeX = 0.0f;
 	float _planeY = 0.66f;
 };
 
+}
 #endif // !PLAYER_H

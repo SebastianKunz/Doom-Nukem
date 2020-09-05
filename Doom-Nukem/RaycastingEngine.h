@@ -3,6 +3,10 @@
 
 #include <cmath>        // std::abs
 
+namespace doom_nukem
+{
+
+
 class RaycastingEngine
 {
 public:
@@ -27,5 +31,6 @@ private:
 	//int _mapY;
 
 };
+}
 
 #endif // !RAYCASTING_ENGINE_H

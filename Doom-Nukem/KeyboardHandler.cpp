@@ -1,5 +1,9 @@
 #include "KeyboardHandler.h"
 
+namespace doom_nukem
+{
+
+
 KeyboardHandler::KeyboardHandler()
 {
 	for (int i = 0; i < SDL_NUM_SCANCODES; i++) {
@@ -24,4 +28,6 @@ bool KeyboardHandler::isPressed(SDL_Scancode scanCode)
 bool KeyboardHandler::isReleased(SDL_Scancode scanCode)
 {
 	return _keyState[scanCode] == false;
+}
+
 }

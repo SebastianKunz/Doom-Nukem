@@ -2,6 +2,10 @@
 #include <iostream>
 #include <string>
 
+namespace doom_nukem
+{
+
+
 GraphicsController::GraphicsController(int width, int height)
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -89,13 +93,16 @@ void GraphicsController::setPixel(int x, int y, SDL_Color color)
     SDL_RenderDrawPoint(_renderer, x, y);
 }
 
-void GraphicsController::setTextureVertical(SDL_Surface *rawTexture, int x, int y, int height, int texX)
+void GraphicsController::setTextureVertical(SDL_Surface *rawTexture, int x, int y, int height, int texX, int texY)
 {
     if (rawTexture == nullptr)
         return;
+
+    //std::cout << "Drawing:\n" << "x: " << x << "y: " << y << "height: " << height << "texX: " << texX << std::endl;
     SDL_Rect destRect = { x, y, 1, height };
-    SDL_Rect srcRect = { texX, 0, 1, height };
+    SDL_Rect srcRect = { texX, texY, 1, 64 };
     auto texture = SDL_CreateTextureFromSurface(_renderer, rawTexture);
     SDL_RenderCopy(_renderer, texture, &srcRect, &destRect);
     SDL_DestroyTexture(texture);
+}
 }

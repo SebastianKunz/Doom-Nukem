@@ -3,6 +3,10 @@
 
 #include <SDL.h>
 
+namespace doom_nukem
+{
+
+
 class KeyboardHandler
 {
 public:
@@ -20,6 +24,8 @@ private:
 	bool _keyState[SDL_NUM_SCANCODES];
 
 };
+
+}
 
 #endif // !KEYBOARD_HANDLER_H
 

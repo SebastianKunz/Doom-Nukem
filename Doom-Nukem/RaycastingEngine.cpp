@@ -1,5 +1,9 @@
 #include "RaycastingEngine.h"
 
+namespace doom_nukem
+{
+
+
 RaycastingEngine::RaycastingEngine()
 {
 }
@@ -83,5 +87,6 @@ float RaycastingEngine::calculatePerpWallDist(int x, float playerPosX,
         perpWallDist = (*mapY - posY + (1 - stepY) / 2) / rayDirY;
 
     return perpWallDist;
+}
 }
 
